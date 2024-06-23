@@ -23,9 +23,13 @@ function solution(array) {
             numberCount.set(array[i], numberCount.get(array[i]) + 1);
         }
     }
+    
+    // 최빈값을 찾는 for문
     var answer = 0;
     var checkNum = 0;
     numberCount.forEach(function(key,value){
+        
+        // for문을 돌며 최빈값을 검색한다.
         if(checkNum < key){
             checkNum = key;
             answer = value;
@@ -33,6 +37,7 @@ function solution(array) {
     })
     
     
+    // 최빈값이 2개 이상인지 확인하는 for문
     var sameCount = 0
     numberCount.forEach(function(key,value){
         if(checkNum == key){
@@ -46,10 +51,4 @@ function solution(array) {
     else{
         return -1;
     }
-    
-    
-    
-    
-    
-    return answer
 }
