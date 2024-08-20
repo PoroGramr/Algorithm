@@ -10,15 +10,13 @@ def solution(numbers):
     # 제한사항
     # n : 9 -> 맘대로 풀어야지
     
-    answer = 0
-    
     checkNum = [i for i in range(0,10)]
+    
     numbers = set(numbers)
     checkNum = set(checkNum)
     dif = checkNum.difference(numbers)
     
-    for i in dif:
-        answer += i
+    answer = sum(dif)
     
     
     return answer
