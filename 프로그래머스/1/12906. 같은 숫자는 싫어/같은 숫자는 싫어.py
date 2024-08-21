@@ -23,7 +23,7 @@ def solution(arr):
         if not answer: # stack is empty
             answer.append(ar)
         else:
-            if answer[-1] != ar:
-                answer.append(ar)
+            if answer[-1] != ar: # peek != value
+                answer.append(ar) # push
     
     return answer
