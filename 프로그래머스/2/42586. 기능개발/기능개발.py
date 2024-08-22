@@ -23,26 +23,38 @@
 
 from collections import deque # queue를 사용하기 위해 import
 def solution(progresses, speeds):
+    
     answer = []
+    
+    # 입력받은 2개의 리스트를 큐로 변환
     progresses = deque(progresses)
     speeds = deque(speeds)
     
-    while progresses: # 모든 작업이 완료될 때 까지 반복
-        # 작업상태 업데이트
-        for i in range(len(progresses)):
-            progresses[i] += speeds[i]
-            if progresses[i] > 100:
-                progresses[i] = 100
-                
-        # 배포된 기능 배포하기
-        cnt = 0 
+    # progresses가 empty가 되버리면 중단
+    while progresses:
+        for update in range(len(progresses)):
+            
+            # speeds값만큼 progresses를 업데이트
+            progresses[update] += speeds[update]
+            
+            # 만약 100을 넘기면 100으로 고정
+            if progresses[update] > 100:
+                progresses[update] = 100
+            
+        # 배포 기능 계산용 변수 선언
+        cnt = 0
         
-        while progresses and progresses[0] == 100: # peek
+        # progresses가 비워져있지 않고 첫번째 요소가 100일때
+        while progresses and progresses[0] == 100 :
             progresses.popleft()
             speeds.popleft()
             cnt += 1
         
-        if cnt > 0:
+        # cnt가 1 이상일때만 answer에 append
+        if cnt > 0: 
             answer.append(cnt)
         
     return answer
+    
+            
+        
