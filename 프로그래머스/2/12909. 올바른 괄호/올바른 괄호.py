@@ -17,16 +17,31 @@
 """
 
 def solution(s):
+    # 스택을 선언
     stack = []
+    
+    # 입력 s의 문자 하나하나 순회
     for pa in s:
+        
+        # 만약 문자가 "(" 라면 stack에 push
         if pa == "(":
-            stack.append(s)
+            stack.append(pa)
+            
+        # 만약 문자가 ")"라면 
         else:
+            
+            # 스택이 비어있다면 올바르지 않은 괄호이기에 return False
             if not stack:
                 return False
+            # 스택이 비어있지 않다면 스택에 "("가 존재 -> 올바른 괄호 -> 짝이 맞음
+            # 괄호 짝이 맞기에 pop
             stack.pop()
     
-    if not stack:
-        return True
-    else:
+    # 모든 문자를 순회하고 스택에 문자가 남아있다 -> 짝이 맞지 않는다 -> 올바르지 않은 괄호
+    if stack:
         return False
+    
+    # 모든 문자를 순회하고 스택이 비었다 -> 짝이 맞음 -> 올바른 괄호
+    else:
+        return True
+            
