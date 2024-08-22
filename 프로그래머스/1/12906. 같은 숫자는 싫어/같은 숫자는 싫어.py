@@ -17,13 +17,18 @@
 """
 
 def solution(arr):
-    answer = [] # stack
+    # 스택을 선언
+    stack = []
     
-    for ar in arr:
-        if not answer: # stack is empty
-            answer.append(ar)
-        else:
-            if answer[-1] != ar: # peek != value
-                answer.append(ar) # push
+    # arr을 순회하며 요소를 검사
+    for num in arr:
+        
+        # 만약 스택이 비워져있다면(맨 처음 for문 시작시)
+        if not stack:
+            stack.append(num)
+            
+        # 스택의 peek값과 num 값이 같지 않다면 push
+        elif stack[-1] != num:
+            stack.append(num)
     
-    return answer
+    return stack
