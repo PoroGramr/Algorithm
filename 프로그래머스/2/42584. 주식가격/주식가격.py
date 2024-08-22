@@ -35,6 +35,7 @@ def solution(prices):
             popped = stack.pop()
             answer[popped[0]] = sec - popped[0]
         stack.append((sec, prices[sec]))
+        print(stack, answer)
        #  [0,0,1,0,0]
     
     
