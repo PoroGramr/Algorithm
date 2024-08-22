@@ -58,6 +58,9 @@ def solution(queue1, queue2):
             sum1 += item
         elif sum1 == goal:
             return iteration
+        # print(queue1)
+        # print(queue2)
+        # print(iteration)
         
         iteration += 1
     
