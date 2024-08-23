@@ -30,17 +30,19 @@ from itertools import permutations
 def solution(k, dungeons):
     answer = 0
     
-    
+    # 반복이 필요한 순열만큼 반복 -> 던전을 탐색하는 방법
     for perm in permutations(dungeons):
         tired = k # 피로도
         count = 0
         
+        # 각 던전에 대해서 피로도를 계산; 입장 가능한 던전 수를 계산
         for minimum, consumtion in perm:
             if tired >= minimum:
                 tired -= consumtion
                 count += 1
             else:
                 break
-                
+        
+        # 최대 값을 업데이트
         answer = max(answer, count)
     return answer
