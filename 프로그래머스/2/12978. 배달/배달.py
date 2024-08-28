@@ -63,7 +63,7 @@ def solution(N, road, K):
                 distance[node] = newDist
                 queue.append((node, distance[node]))
 
-
+    print(distance)
     # 문제 결과에 맞게 결과 출력
     answer = 0
     for d in distance:
