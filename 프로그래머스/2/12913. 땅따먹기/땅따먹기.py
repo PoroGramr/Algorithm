@@ -10,7 +10,11 @@ def solution(land):
     
     for i in range(1, len(land)):
         for j in range(4):
-            cols = [memo[i-1][k] for k in range(4) if k != j]
+            # cols = [memo[i-1][k] for k in range(4) if k != j]
+            cols = []
+            for k in range(4):
+                if k != j:
+                    cols.append(memo[i-1][k])
             memo[i][j] = land[i][j] + max(cols)
             
     answer = max(memo[-1])        
