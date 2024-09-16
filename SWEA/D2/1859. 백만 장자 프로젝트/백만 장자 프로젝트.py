@@ -7,7 +7,7 @@
 - 출력 :
   - 각 테스트 케이스마다 최대 이익 #1 0\n #2 10
 아이디어
-  완전 탐색으로 각 케이스별 이득 값의 최대치를 계산?
+  리스트를 역으로 순회하며 뒤에서 부터 최대값을 순회하며 최대 값 - 해당 순회 날짜의 차이를 계산
 """
 
 n = int(input())
@@ -24,8 +24,10 @@ for i in range(n):
   for val in data[::-1]: # 배열 거꾸로 순회
     if val >= sellPrice: #현재 값이 최댓값보다 크거나 같다면
         sellPrice = val #최댓값 업데이트
+        #print("sellPrice", sellPrice)
     else:
-        answer += sellPrice - val #아니라면 정답값에 가격차이를 더한다. 
+        answer += sellPrice - val #아니라면 정답값에 가격차이를 더한다.
+        #print("answer", answer)
       
   print("#", i + 1, " ", answer, sep="") #출력 양식에 맞춰서 출력
   
