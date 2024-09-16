@@ -18,16 +18,16 @@ for i in range(n):
 
   answer = 0
 
-  # 판매 가격
-  sellPrice = 0
-
-  for val in data[::-1]: # 배열 거꾸로 순회
-    if val >= sellPrice: #현재 값이 최댓값보다 크거나 같다면
-        sellPrice = val #최댓값 업데이트
-        #print("sellPrice", sellPrice)
-    else:
-        answer += sellPrice - val #아니라면 정답값에 가격차이를 더한다.
-        #print("answer", answer)
+  sellPrice = 0 # 역으로 순회하며 리스트에서 해당 루프까지의  최대 값
+  
+  for curPri in data[::-1]: # 역으로 순회
+    
+    if sellPrice < curPri: # 현재 가격이 지금까지의 최대 값보다 비쌀 경우
+      sellPrice = curPri
       
-  print("#", i + 1, " ", answer, sep="") #출력 양식에 맞춰서 출력
+    else: # 지금까지의 최대값 - 현재값
+      answer += sellPrice - curPri
+       
+  print(f"#{i+1} {answer}")
+    
   
