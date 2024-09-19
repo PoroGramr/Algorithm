@@ -20,25 +20,30 @@
 
 n = int(input())
 
+
 for i in range(n):
   N, M = map(int, input().split())
   listA = list(map(int, input().split()))
   listB = list(map(int, input().split()))
-  maxNum = -9999999999
-  
-  
+  maxNum = -999999999
+  # case1의 경우
   if N < M:
-    for k in range(M - N + 1): # 5- 3 = 2 + 1 = 3 -> 0,1,2
+    
+    # 긴 리스트의 길이 - 짧은 리스트의 길이 를 이용하여 긴 리스트의 인덱스에 접근한다.
+    for k in range(M - N + 1): 
       cal = 0
       for j in range(N):
         cal += listA[j] * listB[j + k]
       maxNum = max(maxNum,cal)
-      
+
+  # case2의 경우
   elif N == M:
     for K in range(M):
       maxNum += listA[k] * listB[k]
 
+  # case3의 경우
   elif N > M:
+    # 긴 리스트의 길이 - 짧은 리스트의 길이 를 이용하여 긴 리스트의 인덱스에 접근한다.
     for k in range(N - M + 1):
       cal = 0
       for j in range(M):
