@@ -1,27 +1,20 @@
+# BFS
+
 from collections import deque
 
 
-def dfs(i,j):
-    q = deque()
-    v[i][j] = 1
-    count = 1           # 세대수를 카운트하기 위한 변수
-    q.append((i,j))
-    while q:
-        ci,cj = q.popleft()
-        for pi,pj in ((0,1), (0,-1),(1,0), (-1,0)): # 위,아래,오른,왼 모든 방향을 체크한다
-        
-            ni, nj = ci + pi, cj + pj
-            
-            # 방향의 좌표가 데이터 내에 위치하고, 데이터에서는 1이며(집이먀), 아직 방문하지 않은(카운트하지 않은)세대일 경우
-            if 0 <= nj < N and 0 <= ni < N and v[ni][nj] == 0 and data[ni][nj] == 1:
-                count += 1
-                q.append((ni,nj))
-                v[ni][nj] = 1
-    return count
-        
-        
+def bfs(i,j):
+    # count를 전역 변수로 받음
+    global count
     
-
+    # bfs 함수가 실행될때마다 카운트 +1
+    count += 1
+    v[i][j] = 1
+    for pi,pj in ((1,0), (-1,0), (0,1), (0,-1)):
+        ci, cj = i + pi, j + pj
+        if 0 <= ci < N and 0 <= cj < N and data[ci][cj] == 1 and v[ci][cj] == 0:
+            bfs(ci,cj)
+        
 N = int(input())
 
 data = [list(map(int, input())) for _ in range(N)]  # 입력 데이터 리스트
@@ -32,11 +25,18 @@ answer = []
 for i in range(N):
     for j in range(N):
         
-        # 데이터가 1이고 아직 방문하지 않은 점이라면 dfs 함수로 향한다.
+        # 데이터가 1이고 아직 방문하지 않은 점이라면 bfs 함수로 향한다.
         if data[i][j] == 1 and v[i][j] == 0:
             
-            # dfs함수는 단지별 세대수를 리턴
-            answer.append(dfs(i,j))
+            # 세대수 체크를 위한 count 변수 초기화
+            # bfs 함수가 실행되기 직전마다 초기화됨, 이후 bfs 함수에서 전역 변수로 사용
+            count = 0
+            
+            # bfs로 count 변수 값을 설정(단지별 세대수) 
+            bfs(i,j)
+            
+            # bfs로 계산한 단지별 세대수를 리턴
+            answer.append(count)
     
 # 요구사항에 따라 길이를 먼저 출력하고 리스트의 요소들을 출력한다        
 print(len(answer))
