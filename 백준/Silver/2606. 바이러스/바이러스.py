@@ -11,7 +11,7 @@ def bfs(c):
         for ld in link:
             if ld == 1:
                 continue
-            if v[ld] == 0:
+            if v[ld] == 0: # 만약 방문하지 않은 점이라면 
                 v[ld] = 1
                 q.append(g[ld])
     return sum(v)
@@ -29,7 +29,7 @@ for _ in range(M):
     g[a].append(b)
     g[b].append(a)
 
-for i in range(N + 1):
+for i in range(N + 1): # 정렬은 구지 필요 없을거 같기도 함
     g[i].sort()
 # [] [2, 5] [1, 3, 5] [2] [7] [1, 2, 6] [5] [4]
 answer = bfs(1)
