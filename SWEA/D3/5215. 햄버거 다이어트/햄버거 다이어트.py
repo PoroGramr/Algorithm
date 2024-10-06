@@ -1,38 +1,33 @@
-def dfs(index, current_score, current_calories):
-    global max_score
 
-    # 칼로리 제한을 넘으면 더 이상 진행하지 않음
-    if current_calories > calorie_limit:
+def dfs(ii, sumc, curt): # index of ingredint, sum of calrorie , curent taste
+    global maxTaste
+    
+    if ii == N:
+        if sumc <= L:
+            maxTaste = max(curt, maxTaste)
         return
 
-    # 현재까지 얻은 점수로 최대 점수를 갱신
-    max_score = max(max_score, current_score)
+    
 
-    # 모든 재료를 확인했으면 종료
-    if index == n:
-        return
+    # 만약 해당 재료를 추가한다면
+    dfs(ii+1,sumc + data[ii][1], curt + data[ii][0])
 
-    # 현재 재료를 선택하는 경우
-    dfs(index + 1, current_score + ingredients[index][0], current_calories + ingredients[index][1])
+    # 추가하지 않는다면
+    dfs(ii+1, sumc,curt)
 
-    # 현재 재료를 선택하지 않는 경우
-    dfs(index + 1, current_score, current_calories)
 
-# 테스트 케이스 수
 T = int(input())
 
-for test_case in range(1, T + 1):
-    # 재료 수와 칼로리 제한 입력
-    n, calorie_limit = map(int, input().split())
+for i in range(1, T+1):
+    N, L = map(int, input().split()) # N : count of ingredient. L : calorie limit
+    data = []
+    for _ in range(N):
+        ing, cal = map(int, input().split()) # ingredient, calorie
+        data.append([ing,cal])
+    maxTaste = 0
+    dfs(0,0,0) # index of ingredint, sum of calrorie , curent taste
+   
+    print(f"#{i} {maxTaste}")
 
-    # 재료 정보 입력 (점수, 칼로리)
-    ingredients = [tuple(map(int, input().split())) for _ in range(n)]
 
-    # 최대 점수를 저장할 변수
-    max_score = 0
 
-    # 백트래킹을 통해 탐색 시작
-    dfs(0, 0, 0)
-
-    # 결과 출력
-    print(f'#{test_case} {max_score}')
