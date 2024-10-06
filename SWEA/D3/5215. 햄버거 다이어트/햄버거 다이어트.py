@@ -1,7 +1,11 @@
+# import sys
+# sys.setrecursionlimit(10**6)  # 재귀 제한을 1,000,000으로 설정
+
 
 def dfs(ii, sumc, curt): # index of ingredint, sum of calrorie , curent taste
     global maxTaste
     
+    # 재료의 끝까지 탐색했다면 
     if ii == N:
         if sumc <= L:
             maxTaste = max(curt, maxTaste)
