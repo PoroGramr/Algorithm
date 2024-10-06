@@ -36,27 +36,44 @@ for i in range(1, T+1):
     cos = list(map(int, input().split()))
 
     # 손님 도착 시간 리스트 정렬
+    # (3, 2) 이런식으로 도착 시간이 뒤죽박죽 들어오는 경우가 있음
     cos.sort()
 
     # 각 second 별 빵 개수 계산하는 리스트
     bread = [0 for _ in range(11112)]
-    for sec in range( 11112):
+
+    # 손님 도착시간이 0초인 경우도 있기에 전체 탐색
+    for sec in range(11112):
         answer = ""
+
         # 빵의 개수 계산
+        # 0초일 때에도 나머지느 0이므로 0초일 때에는 예외
         if sec % M == 0 and sec != 0:
             bread[sec] = bread[sec - 1] + K
+        
+        # 빵이 나오는 시간이 아닌경우 이전 second의 빵 개수 그대로 가져옴
         else:
             bread[sec] = bread[sec - 1]
 
-        # 손님 도착에 따른 방 개수의 변화
+        # 손님 도착에 따른 빵 개수의 변화
+        # 손님 도착 시간 리스트를 큐로 사용
         if cos:
+
+            # second가 같다면
             if cos[0] == sec:
+
+                # cos를 popleft
                 cos.pop(0)
+
+                # 해당 sec 빵 개수 -1
                 bread[sec] -= 1
+
+                # 만약 해당 시간의 빵 개수가 0보다 작다면 Impossible 출력
                 if bread[sec] < 0:
                     answer = "Impossible"
                     break
         
+        # 빵 개수가 이상없이 잘 소진된다면 Possible 출력
         answer = "Possible"
     
     print(f"#{i} {answer}")
