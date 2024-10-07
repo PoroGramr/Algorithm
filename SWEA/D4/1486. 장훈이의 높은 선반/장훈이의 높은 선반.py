@@ -13,9 +13,11 @@
 """
 
 def dfs(ii, ch): # 직원들 키의 인덱스, 현재 높이
+    global top
+
     if ii == N:
         if ch >= B:
-            top.append(ch)
+            top = min(top, ch)
         return
 
     # 해당 점원이 탑에 포함된다면
@@ -26,12 +28,14 @@ def dfs(ii, ch): # 직원들 키의 인덱스, 현재 높이
 T = int(input())
 
 for i in range(1, T+1):
-    N , B = map(int, input().split())
+    N , B = map(int, input().split()) # 점원의 수, 선반의 높이
 
     data = list(map(int, input().split()))
 
-    top = []
+    # top의 초기값은 무한으로 설정
+    top = float("inf")
     dfs(0,0) # 직원들 키의 인덱스, 현재 높이
-    top.sort()
-    answer = top[0] - B
+
+    # 기준을 충족하는 가장 작은 탑 - 선반의 길이
+    answer = top - B
     print(f"#{i} {answer}")
