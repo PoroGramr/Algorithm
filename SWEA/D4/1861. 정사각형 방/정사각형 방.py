@@ -1,42 +1,42 @@
-def dfs(y, x):
-    # 이미 계산된 결과가 있다면 그 값을 반환
-    if dp[y][x] != -1:
-        return dp[y][x]
+from collections import deque
 
-    # 이동할 수 있는 방의 개수 (시작 위치는 1)
-    tmpCount = 1
+def bfs(y, x):
+    if memo[y][x] != 0:
+        return memo[y][x]
 
-    for py, px in ((0, 1), (0, -1), (1, 0), (-1, 0)):
-        ny, nx = y + py, x + px
+    q = deque([(y, x)])
+    visited = [(y, x)]
+    count = 1
 
-        # 현재 좌표에서 인접한 방으로 이동할 수 있는 조건 확인
-        if 0 <= ny < N and 0 <= nx < N and data[y][x] + 1 == data[ny][nx]:
-            tmpCount = max(tmpCount, 1 + dfs(ny, nx))
+    while q:
+        cy, cx = q.popleft()
+        for dy, dx in ((0,1), (0,-1), (1,0), (-1,0)):
+            ny, nx = cy + dy, cx + dx
+            if 0 <= ny < N and 0 <= nx < N and data[ny][nx] == data[cy][cx] + 1:
+                count += 1
+                q.append((ny, nx))
+                visited.append((ny, nx))
 
-    # 계산된 결과를 메모이제이션
-    dp[y][x] = tmpCount
-    return dp[y][x]
-
+    for vy, vx in visited:
+        memo[vy][vx] = count
+    return count
 
 T = int(input())
 
-for i in range(1, T + 1):
+for tc in range(1, T+1):
     N = int(input())
     data = [list(map(int, input().split())) for _ in range(N)]
-    
-    # 메모이제이션을 위한 dp 테이블 (-1로 초기화)
-    dp = [[-1 for _ in range(N)] for _ in range(N)]
-    countData = []
+    memo = [[0] * N for _ in range(N)]
 
-    # 모든 좌표에 대해 dfs 수행
+    max_count = 0
+    max_start = N*N
+
     for y in range(N):
         for x in range(N):
-            count = dfs(y, x)
-            countData.append([data[y][x], count])
+            if memo[y][x] == 0:
+                count = bfs(y, x)
+                if count > max_count or (count == max_count and data[y][x] < max_start):
+                    max_count = count
+                    max_start = data[y][x]
 
-    # 움직일 수 있는 방의 수가 큰 순서대로, 같다면 방의 번호가 작은 순으로 정렬
-    countData.sort(key=lambda x: (-x[1], x[0]))
-
-    # 정답 출력
-    answer = countData[0]
-    print(f"#{i} {answer[0]} {answer[1]}")
+    print(f"#{tc} {max_start} {max_count}")
