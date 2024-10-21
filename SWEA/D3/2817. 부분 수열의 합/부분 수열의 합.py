@@ -1,10 +1,10 @@
 def check(i,n):
     global ans
-    v = [0] * (N + 1)
-    if n == K:
-        ans += 1
-        return
-    elif n > K:
+    # 더 이상 체크할 인덱스가 없으면 종료
+    if i == len(data):
+        # 부분수열의 합이 K와 같은지 확인
+        if n == K:
+            ans += 1
         return
 
     if i + 1 <= len(data):
@@ -12,8 +12,6 @@ def check(i,n):
 
         check(i + 1, n)
     
-
-
 
 
 
