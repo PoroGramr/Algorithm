@@ -20,6 +20,12 @@ for t in range(1, T+1):
     ans = 0
     # v 배열 3개 : 열, 대각선 2개
     v1, v2,v3 = [[0] * (2*N) for _ in range(3)]
+    """
+    v1 = [0, 0]
+    v2 = [0, 0]
+    v3 = [0, 0]
+    """
+    
     dfs(0)
 
     print(f"#{t} {ans}")
