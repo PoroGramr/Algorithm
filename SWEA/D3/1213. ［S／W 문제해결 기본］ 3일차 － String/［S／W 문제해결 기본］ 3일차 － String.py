@@ -1,8 +1,15 @@
-for tc in range(10):
-    T = int(input())
-    search = input()
-    str_ = input()
+T = 10
 
-    ans = str_.count(search)
+for t in range(1, T+1):
+    a = int(input())
+    ck = list(input())
+    ckL = len(ck)
+    data = list(map(str, input()))
+    ans  = 0
+    for i in range(len(data) - 1):
+        if data[i:i+ckL] == ck:
+            ans += 1
+    print(f"#{t} {ans}")
 
-    print(f"#{tc+1} {ans}")
+
+
