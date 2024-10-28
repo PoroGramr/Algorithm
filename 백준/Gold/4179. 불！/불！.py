@@ -1,39 +1,54 @@
 from collections import deque
-dx = [0, 0, -1, 1]
-dy = [-1, 1, 0, 0]
 
+def bfs(data):
+    global ans
 
-def bfs(q):
+    q = deque()
+
+    # 지훈이와 불의 초기 위치를 큐에 추가
+    q.append((0, jy, jx))  # 지훈의 초기 위치
+    for fire in firelst:
+        q.append((-1, fire[0], fire[1]))
 
     while q:
-        x, y, s = q.popleft()
-        for i in range(4):
-            nx, ny = x+dx[i], y+dy[i]
-            if 0 <= nx < n and 0 <= ny < m:
-                if not visit[nx][ny] and a[nx][ny] == '.':
-                    q.append((nx, ny, s))
-                    visit[nx][ny] = visit[x][y] + 1
-            else:
-                if s == 'J':
-                    return visit[x][y]
+        time, y, x = q.popleft()
 
+        # 지훈이 탈출 가능성 체크
+        if time > -1 and data[y][x] != "F" and (y == 0 or x == 0 or y == n - 1 or x == m - 1):
+            ans = min(ans, time + 1)
+            break  # 탈출 성공 시 함수 종료
+            
+        # 상하좌우 이동
+        for py, px in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+            ny, nx = y + py, x + px
+            if 0 <= ny < n and 0 <= nx < m and data[ny][nx] != "#":
+                # 지훈이 이동
+                if time > -1 and data[ny][nx] == ".":
+                    data[ny][nx] = "_"  # 이미 방문한 자리 표시
+                    q.append((time + 1, ny, nx))
+
+                # 불 확산
+                elif time == -1 and data[ny][nx] != "F":
+                    data[ny][nx] = "F"
+                    q.append((-1, ny, nx))
 
 n, m = map(int, input().split())
-a = [list(input()) for _ in range(n)]
-visit = [[0]*m for _ in range(n)]
-q = deque()
+data = []
+firelst = []
+for i in range(n):
+    data.append(list(input().rstrip()))
 
 for i in range(n):
     for j in range(m):
-        if a[i][j] == 'J':
-            visit[i][j] = 1
-            q.append((i, j, 'J'))
-        if a[i][j] == 'F':
-            visit[i][j] = 1
-            q.appendleft((i, j, 'F'))
+        if data[i][j] == "J":
+            jy, jx = i, j  # 지훈의 좌표 저장
+        elif data[i][j] == "F":
+            firelst.append([i,j])
 
-ans = bfs(q)
-if ans:
-    print(ans)
-else:
-    print('IMPOSSIBLE')
+ans = float("inf")  # 초기값 설정
+bfs(data)
+if ans == float("inf"):
+    ans = "IMPOSSIBLE"
+
+# 결과 출력
+print(ans)
