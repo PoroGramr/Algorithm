@@ -31,18 +31,18 @@ def bfs(tlst):
 
     return cnt
 
-def dfs(n, tlst):
-    global ans
-
-    if n == 3: # 3개의 좌표를 모두 선택한 경우
-        ans = max(ans, bfs(tlst))
-        return
-
-    for i in range(CNT):
-        if v[i] == 0:
-            v[i] = 1
-            dfs(n+1, tlst+[blk[i]])
-            v[i] = 0
+# def dfs(n, tlst):
+#     global ans
+#
+#     if n == 3: # 3개의 좌표를 모두 선택한 경우
+#         ans = max(ans, bfs(tlst))
+#         return
+#
+#     for i in range(CNT):
+#         if v[i] == 0:
+#             v[i] = 1
+#             dfs(n+1, tlst+[blk[i]])
+#             v[i] = 0
 
 
 N, M = map(int, input().split())
@@ -63,6 +63,14 @@ for i in range(N):
 CNT = len(blk)
 v = [0] * CNT
 ans = 0
+# 1. 백트래킹으로 풀이
+# dfs(0,[])
+# print(ans)
 
-dfs(0,[])
+# 2 루프 CNT개 중에 3개를 선택(가능한 모든 조합)
+for i in range(CNT - 2):
+    for j in range(i+1, CNT - 1):
+        for k in range(j + 1, CNT):
+            ans = max(ans, (bfs([blk[i], blk[j], blk[k]])))
 print(ans)
+
