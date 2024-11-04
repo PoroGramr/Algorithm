@@ -1,49 +1,36 @@
-from collections import deque
 
-def dfs(y,x):
-        v = [[0 for _ in range(100)] for _ in range(100)]
-        q = deque()
-        q.append((y,x))
-        v[y][x] = 1
-        
-        while q:
-            cy,cx = q.popleft()
-        
-            # 사다리타기의 우선순위인 좌우 -> 아래 순으로 진행
-            for py,px in ((0,1),(0,-1),(1,0)):
-                ny ,nx = cy + py, cx + px
-                if 0 <= ny < 100 and 0 <= nx <100:
-                    
-                    # 만약 다음 좌표의 데이터 값이 2라면 True를 리턴
-                    if data[ny][nx] == 2:
-                        return True
-					
-                    # 계속해서 dfs 실행
-                    if data[ny][nx] == 1 and v[ny][nx] == 0:
-                        q.append((ny,nx))
-                        v[ny][nx] = 1
-                        #
-                        break
-        return False
+def dfs(y,x,ox): # y, x, 시작 x 좌표
+    global ans
+    if y == 99:
+        if data[y][x] == 2:
+            ans = ox
+        return
+
+    for py,px in ((0,-1),(0,1), (1,0)):
+        ny,nx = y + py, x + px
+        if 0 <= ny < 100 and 0 <= nx < 100 and data[ny][nx] !=0 and v[ny][nx] == 0:
+            v[ny][nx] = 1
+            dfs(ny,nx,ox)
+            return # 한 방향으로 이동 후 되돌아가지 않기 위해 바로 리턴 제일 중요!!!!
 
 
 
-for I in range(1,11):
-    i = int(input())
+for t in range(1, 11):
+    n = int(input())
     data = []
+
+    # 사다리의 데이터 리스트를 입력 받음
     for _ in range(100):
-        data.append(list(map(int,input().split())))
-        
-    answer = 0
-    
-    # 0,0 ~ 0,100 까지 dfs를 실행
+        data.append(list(map(int, input().split())))
+
+    # 정답 출력용 변수
+    ans = 9999
+
+    # 모든 x좌표를 탐색하며 정답 추출
     for x in range(0,100):
         if data[0][x] == 1:
-            
-            # dfs를 실행하며 데이터 리스트에서 2를 만난다면 True를 리턴
-            # 해당 x 값이 정답
-            if dfs(0,x):
-                answer = x
-                
-    print(f"#{I} {answer}")
-            
+            v = [[0] * 100 for _ in range(100)]
+            v[0][x] = 1
+            dfs(0,x,x) # y,x, 시작 x 좌표
+
+    print(f"#{n} {ans}")
