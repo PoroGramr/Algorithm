@@ -11,26 +11,30 @@
 
 마지막 계산
 """
-for i in range(1,11):
-    d = int(input())
-    data  = list(map(int, input().split()))
-    m = len(data)
-    for k in range(d):
-        bigV = max(data)
-        smallV = min(data)
+for t in range(1, 11):
+    # 덤프 횟수
+    dump = int(input()) 
+    
+    # 세로 길이 정보 리스트
+    data = list(map(int, input().split()))
+    for _ in range(dump):
+        minValue = min(data)
+        maxValue = max(data)
         
-        bigIndex = 0
-        smallIndex = 0
-        for fb in range(m):
-            if data[fb] == bigV:
-                bigIndex = fb
-        for fs in range(m):
-            if data[fs] == smallV:
-                smallIndex = fs
-        data[smallIndex] += 1
-        data[bigIndex] -= 1
-    answer = max(data) - min(data)
-    print(f"#{i} {answer}")
+        minIdx = 0
+        maxIdx = 0
+        for i in range(100):
+            if data[i] == minValue:
+                minIdx = i
+            elif data[i] == maxValue:
+                maxIdx = i
+        
+        data[minIdx] += 1
+        data[maxIdx] -= 1
+    
+    ans = max(data) - min(data)
+    
+    print(f"#{t} {ans}")
             
-        
-       
+    
+    
