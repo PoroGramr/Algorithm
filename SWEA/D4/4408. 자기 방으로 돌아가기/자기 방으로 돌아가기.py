@@ -1,23 +1,34 @@
-n = int(input())
+T = int(input())
 
-for k in range(n):
-    count = 0
-    s = int(input())  # 돌아가야 하는 학생수
-    move = [list(map(int, input().split())) for _ in range(s)]
+for t in range(1, T+1):
+    N = int(input()) # 돌아가야 할 학생등의 수
+
+    # 0은 무시하고 나머지 1 ~ 200 만 사용
+    """
+    방 - 통로
+    1,2 - 1
+    3,4 - 2
+    5,6 = 3
+    7,8 - 4
+    9,10 - 5
     
-    # 각 이동 경로를 복도 구간으로 변환
-    corridor = [0] * 201  # 복도는 1번부터 200번까지
-    
-    for i in range(len(move)):
-        move[i].sort()
-        start = (move[i][0] + 1) // 2  # 출발하는 방의 복도 구간
-        end = (move[i][1] + 1) // 2    # 도착하는 방의 복도 구간
+    위 처럼 통로에 인덱싱을 하기 위해선
+    (방 번호 + 1) // 2 연산을 통해 할 수 있음
+    """
+
+    data = [0] * 201
+
+    for _ in range(N):
+        currentRoom, originalRoom = map(int, input().split())
         
-        # 이동 구간에서 모든 복도 구간의 겹침을 기록
-        for j in range(start, end + 1):
-            corridor[j] += 1
-    
-    # 가장 많이 겹친 복도 구간을 찾음
-    count = max(corridor)
-    
-    print(f"#{k+1} {count}")
+        # 현재 방 번호가 원래 방 번호보다 클 경우 둘을 바꿔 줌
+        if currentRoom > originalRoom:
+            currentRoom, originalRoom = originalRoom, currentRoom
+        
+        start = (currentRoom  + 1 ) // 2
+        end = (originalRoom + 1) // 2
+        
+        for check in range(start, end + 1):
+            data[check] += 1
+
+    print(f"#{t} {max(data)}")
