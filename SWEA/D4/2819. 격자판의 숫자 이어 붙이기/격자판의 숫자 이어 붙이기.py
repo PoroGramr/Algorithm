@@ -1,27 +1,25 @@
-def dfs(n, num, y, x):
-    if n == CNT:
-        sset.add(num)
-        return 
+def dfs(num, y,x,s):
+    if num == 7:
+        nums.add(int(s))
+        return
 
-    for py, px in ((0,1), (0,-1), (1,0), (-1,0)):
-        ny ,nx = y + py, x + px
-        if 0 <= ny < N and 0 <= nx < N:
-            dfs(n+1, num*10 + data[ny][nx], ny,nx)
-
+    for py, px in ((0,-1),(0,1),(1,0),(-1,0)):
+        ny, nx = y + py, x + px
+        if 0 <= ny < 4 and 0 <= nx < 4:
+            dfs(num + 1, ny,nx, s + str(data[ny][nx]))
 
 T = int(input())
 
-for i in range(1, T+1):
-    N , CNT = 4, 7
-    data = [list(map(int, input().split())) for _ in range(N)]
+for t in range(1, T + 1):
+    data = []
 
- 
-    sset = set()
+    for _ in range(4):
+        data.append(list(map(int, input().split())))
 
-    # 가능한 모든 위치 순회
-    for y in range(N):
-        for x in range(N):
-            dfs(1, data[y][x], y, x)
+    nums = set()
+    for i in range(4):
+        for j in range(4):
+            dfs(1, i,j,str(data[i][j]))
 
-    print(f"#{i} {len(sset)}")
-
+    ans = len(nums)
+    print(f"#{t} {ans}")
