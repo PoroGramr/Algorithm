@@ -18,26 +18,44 @@
     그냥 탐색?
     그러면 그냥
     자기보다 덩치 큰 사람의 수 ?
+    자신제외 모든 요소를 탐색하며
+    자신보다 덩치가 크다면 count한 후
+    정답 리스트에 삽입
 
 """
 N = int(input())
+
+# 키,몸무게 저장할 리스트
 data = []
 
+# 키,몸무게 저장
 for _ in range(N):
     cm, kg = map(int, input().split())
 
     data.append([cm, kg])
-
+# 정답 출력용 리스트
 ans = []
 
+# 모든 요소를 탐색
 for i in range(N):
+
+    # 자신보다 덩치 큰 사람 카운트
     count = 0
+    # 본인을 제외한 다른 요소들 탐색
     for j in range(N):
+
+        # 자기 자신은 탐색하지 않음
         if i == j:
             continue
+            
+        # 자신보다 덩치 큰 사람이 있을경우
         elif data[i][0] < data[j][0] and data[i][1] < data[j][1]:
             count += 1
+    # 자신 보다 덩치큰 사람 탐색이 끝났을 경우 등수를 출력해야 하므로 +1
+    # 등수는 1부터 시작하기 때문
     ans.append(count+1)
+
+# 정답 리스트 출력
 print(*ans)
 
 
