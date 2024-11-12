@@ -1,6 +1,7 @@
 from collections import deque
 
-def bfs(i, computers, v):
+def bfs(i, computers):
+    global v
     q = deque()
     q.append(computers[i])
     v[i] = 1
@@ -16,13 +17,13 @@ def bfs(i, computers, v):
         
 
 def solution(n, computers):
-    global answer 
+    global v
     answer = 0
     v = [0] * n
     
     for i in range(n):
         if v[i] == 0:
-            bfs(i, computers,v)
+            bfs(i, computers)
             answer += 1
     return answer
     
