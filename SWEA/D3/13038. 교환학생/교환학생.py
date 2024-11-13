@@ -4,13 +4,19 @@ for t in range(1, T + 1):
     N = int(input())
 
     data = list(map(int, input().split()))
-    # 수업 듣기 시작하는 요일 저장용 변수
+    # 수업이 있는 요일 저장용 리스트
     daysClass = []
     for i in range(len(data)):
         if data[i] == 1:
             daysClass.append(i)
+    
+    # 결과 출력용 변수
+    # 최소 등교 일수 저장
     minDays = float("inf")
+    
+    # 등교 시작 요일에 따라 등교일수가 최소가 되는 값 찾기
     for day in daysClass:
+        
         # 수강한 수업 수 카운트
         count = 0
 
@@ -31,6 +37,8 @@ for t in range(1, T + 1):
 
             # 다음 요일로
             day += 1
+        
+        # 등교일수가 가장 적은 경우 업데이트
         minDays = min(minDays, days)
 
     print(f"#{t} {minDays}")
