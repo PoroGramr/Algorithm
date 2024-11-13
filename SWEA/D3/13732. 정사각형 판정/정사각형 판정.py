@@ -17,17 +17,23 @@ for t in range(1, T + 1):
 
                 maxX = max(maxX,x)
                 maxY = max(maxY,y)
+    
+    # 정사각형인지 확인
     check = True
     
+    # 서로 길이의 차가 다르면 정사각형이 아님
     if maxX - minX != maxY - minY:
         check = False
-    for i in range(minY, maxY + 1):
-        for j in range(minX, maxX + 1):
-            if data[i][j] != "#":
-                check = False
+    
+    # 좌표안이 모둔 "#"인지 확인
+    else:
+        for i in range(minY, maxY + 1):
+            for j in range(minX, maxX + 1):
+                if data[i][j] != "#":
+                    check = False
+                    break
+            if not check:
                 break
-        if not check:
-            break
 
     if check:
         print(f"#{t} yes")
