@@ -1,43 +1,24 @@
-# import sys
-# sys.setrecursionlimit(10**6)  # 재귀 제한을 1,000,000으로 설정
-
-def dfs(i, score, cal): # 인덱스, 점수, 칼로리
-    global ans
-    
-    # 모든 요소를 다 탐색했을 때
-    if i == M:
-        
-        # 제한 칼로리를 넘지 않았다면
-        if cal <= L:
-            ans = max(ans, score)
-        return
-
-    # 해당 인덱스의 재료를 추가하는 경우
-    dfs(i+1, score+data[i][0], cal + data[i][1])
-    
-    # 해당 인덱스의 재료를 추가하지 않는 경우
-    dfs(i+1, score, cal)
-
-    return
-
-
 T = int(input())
+for t in range(1, T + 1):
+    N, L = map(int, input().split())
 
-for t in range(1, T+1):
-    N, L = map(int, input().split()) # 재료의 수, 제한 칼로리
     data = []
-
-
     for _ in range(N):
-        score, cal  = map(int, input().split()) # 점수, 칼로리를 리스트에 삽입
-        data.append([score, cal])
+        # 맛, 칼로리
+        s, c = map(int, input().split())
+        data.append((s,c))
+    # dp[i][j]  => 인덱스 i시에 칼로리 제한 j일 경우 최대값     
+    dp = [[0] * (L + 1) for _ in range(N + 1)]
     
-    # 데이터의 길이를 변수로 저장
-    M = len(data)
+    # 음식 인덱스
+    for i in range(1,N + 1):
+        
+        # 칼로리
+        for j in range(1,L + 1):
+            if data[i-1][1] <= j:
+                # 이전 요소 그대로 가져오거나, dp[이전요소 - 현재 인덱스 무게][] + 현재 요소 점수
+                dp[i][j] = max(dp[i-1][j], dp[i-1][j-data[i-1][1]] + data[i-1][0])
+            else:
+                dp[i][j] = dp[i-1][j]
 
-    ans = 0
-    
-    # 탐색
-    dfs(0,0,0) # 인덱스, 점수, 칼로리
-
-    print(f"#{t} {ans}")
+    print(f"#{t} {dp[N][L]}")
