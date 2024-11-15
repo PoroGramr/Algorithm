@@ -1,6 +1,6 @@
 # [level 3] 거스름돈 - 12907 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12907?language=python3) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12907) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 08월 29일 19:43:39
+2024년 11월 15일 20:07:51
 
 ### 문제 설명
 
