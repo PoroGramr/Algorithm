@@ -1,16 +1,21 @@
 T = 10
-for t in range(1, T+1):
-	N = int(input())
-	data = list(map(int, input().split()))
-	ans = 0
 
-	for i in range(2, N - 2):
-		left1 = data[i-2]
-		left2 = data[i-1]
-		right1 = data[i+1]
-		right2 = data[i+2]
+for t in range(1, T + 1):
+    N = int(input())
+    data = list(map(int, input().split()))
 
-		if left1 < data[i] and left2 < data[i] and right1 < data[i] and right2 < data[i]:
-			ans += data[i] - max(left1, left2, right2, right1)	
+    count = 0
+    for i in range(2, len(data)- 2):
+        left1 = data[i-1]
+        left2 = data[i-2]
+        right1 = data[i+1]
+        right2 = data[i+2]
+
+        high = max(left1, left2, right1, right2)
+        if data[i] > high:
+            count += data[i] - high
+
     
-	print(f"#{t} {ans}")
+    print(f"#{t} {count}")
+
+
