@@ -1,20 +1,47 @@
-T = int(input())
-for t in range(1, T + 1):
-    N, K = map(int, input().split())
-    data = []
+"""
+1 테스트 케이스 갯수
+4 5 물건의 개수와 가방의 부피
 
+1 2
+3 2
+4 4
+2 3
+"""
+
+T = int(input())  # 테스트 케이스 개수
+
+for t in range(1, T + 1):
+
+    N, K = map(int, input().split()) # 물건의 개수와 민수 가방의 부피
+    data = [] # 물건의 가치와 부피를 저장할 리스트
+
+    ## 물건의 가치와 부피를 저장할 리스트
     for _ in range(N):
         v, c = map(int, input().split())
         data.append((v, c))
+    # [(1, 2), (3, 2), (4, 4), (2, 3)]
 
     dp = [[0] * (K + 1) for _ in range(N + 1)]
+    """
+    [[0, 0, 0, 0, 0, 0], 
+    [0, 0, 0, 0, 0, 0], 
+    [0, 0, 0, 0, 0, 0], 
+    [0, 0, 0, 0, 0, 0], 
+    [0, 0, 0, 0, 0, 0]]
+    """
 
-    for i in range(1, N + 1):
-        for j in range(1, K + 1):
+    #  최대무게가 w인 가방에서 i번째 물건까지 판단했을 때의 최대 가치
+    # dp[w][i] = 최대무게가 w인 가방에서 i번째 물건까지 판단했을 때의 최대 가치
+    # dp[1][3] = 최대무게가 1인 가방에서 3번째 물건까지 판단했을 때의 최대 가치
+
+    # 사실상 루프가 1부터 시작하지만 루프 번호 - 1 해서 0부터 시작한다.
+    for i in range(1, N + 1): # 물건번호
+        for j in range(1, K + 1): # 물건무게
             if data[i-1][0] <= j:
                 dp[i][j] = max(dp[i-1][j], dp[i-1][j - data[i-1][0]] + data[i-1][1])
             else:
                 dp[i][j] = dp[i-1][j]
+    
     print(f"#{t} {dp[N][K]}")
 
 
