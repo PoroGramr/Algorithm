@@ -2,34 +2,54 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-nums = [int(input()) for _ in range(n)]
 
-# 산술 평균
+nums = []
+
+for _ in range(n):
+    nums.append(int(input()))
+
+
+# 신술 평균
 num1 = round(sum(nums) / n)
 
 # 중앙값
-nums.sort()
-num2 = nums[n // 2]
+numsCopy = sorted(nums)
+num2 = numsCopy[n // 2]
 
 # 최빈값
 check = [0] * 8001
-for x in nums:
-    check[x + 4000] += 1
+for n in nums:
+    cn = n + 4000
 
-max_count = max(check)
+    check[cn] += 1
+
+maxn = max(check)
+
 popul = []
 
-for i in range(8001):
-    if check[i] == max_count:
-        popul.append(i - 4000)
+for c in range(len(check)):
+    if check[c] == maxn:
+        popul.append(c-4000)
 
-num3 = popul[0] if len(popul) == 1 else popul[1]
+num3 = 0
+if len(popul) == 1:
+    num3 = popul[0]
+else:
+    num3 = popul[1]
 
 # 범위
-num4 = nums[-1] - nums[0]
+num4  = max(nums) - min(nums)
 
-# 출력
 print(num1)
 print(num2)
 print(num3)
 print(num4)
+
+
+
+
+
+
+
+
+
