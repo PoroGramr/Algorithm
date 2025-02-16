@@ -38,8 +38,3 @@ tbl = [0,1,2,4,8]
 for i in range(1, N+1):
     ans += data[i][top[i]] * tbl[i]
 print(ans)
-
-
-
-
-
