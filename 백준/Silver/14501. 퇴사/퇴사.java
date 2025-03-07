@@ -32,17 +32,15 @@ public class Main {
     }
     
     public static void dfs(int day,int profit){
-        if (day>= n){
+        if (day >= n){
             maxProfit = Math.max(profit, maxProfit);
-            return ;
+            return;
         }
 
-        // 해당 날짜를 선택할 때
         if(day + consulting[day][0] <= n){
-            dfs(day+consulting[day][0], profit + consulting[day][1]);
+            dfs(day+ consulting[day][0], profit + consulting[day][1]);
         }
 
-        
         dfs(day+1, profit);
     }
         
