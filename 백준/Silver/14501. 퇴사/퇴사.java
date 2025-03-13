@@ -36,11 +36,11 @@ public class Main {
             maxProfit = Math.max(profit, maxProfit);
             return;
         }
-
+    // 해당 일에 상담을 진행하는 경우
         if(day + consulting[day][0] <= n){
             dfs(day+ consulting[day][0], profit + consulting[day][1]);
         }
-
+    // 해당 일에 상담을 진행하지 않을 경우
         dfs(day+1, profit);
     }
         
