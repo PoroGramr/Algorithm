@@ -1,28 +1,45 @@
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-        long A = sc.nextLong();
-        long B = sc.nextLong();
-        int count = 1; // B에서 시작하므로 1부터 시작
+		long start = Long.parseLong(st.nextToken());
+		long fin = Long.parseLong(st.nextToken());
 
-        while (B > A) {
-            if (B % 2 == 0) {
-                B /= 2;
-            } else if (B % 10 == 1) {
-                B /= 10;
-            } else {
-                break;
-            }
-            count++;
-        }
+		int count = 1;
 
-        if (B == A) {
-            System.out.println(count);
-        } else {
-            System.out.println(-1);
-        }
-    }
+		while (fin != start){
+			
+			// 만약 fin이 start보다 작아지는 연산이 발생한다면 중단
+			if(fin < start){
+				count = -1;
+				break;
+			}
+
+
+			if (fin % 10 == 1){
+				fin = fin - 1;
+				fin = fin / 10;
+				count += 1;
+			}
+
+			else if (fin % 2 == 0){
+				fin = fin / 2;
+				count += 1;
+			}
+			
+			// 아무런 연산이 불가능 한 경우가 발생하면 중단
+			else {
+				count = -1;
+				break;
+			}
+
+		}
+
+		System.out.println(count);
+
+	}
 }
