@@ -1,32 +1,36 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+	static long[] lines;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-        long N = sc.nextLong();
-        int A = sc.nextInt();
-        int B = sc.nextInt();
-        int C = sc.nextInt();
+		long N = Long.parseLong(st.nextToken());
+		int A = Integer.parseInt(st.nextToken());
 
-        double low = 0;
-        double high = Math.min(A, Math.min(B, C));
-        double mid = 0;
+		int B = Integer.parseInt(st.nextToken());
 
-        // 이분 탐색 (실수)
-        for (int i = 0; i < 100; i++) {  // 충분히 반복해서 정밀도 확보
-            mid = (low + high) / 2;
-            if (countCubes(A, B, C, mid) >= N) {
-                low = mid; // 가능한 경우 -> 더 큰 길이를 시도
-            } else {
-                high = mid; // 불가능한 경우 -> 더 작은 길이를 시도
-            }
-        }
+		int C = Integer.parseInt(st.nextToken());
 
-        System.out.printf("%.10f\n", low); // 정확도 요구 높음
-    }
+		double left = 0;
+		double right = Math.min(A, Math.min(B, C));
+		double mid = 0;
 
-    static long countCubes(int A, int B, int C, double len) {
-        return (long)(A / len) * (long)(B / len) * (long)(C / len);
-    }
+		for (int i = 0; i < 100; i ++) {
+			mid = (left + right) / 2;
+			if (countCubes(A, B, C, mid) >= N) {
+				left = mid;
+			} else {
+				right = mid;
+			}
+
+		}
+		System.out.printf("%.10f\n", left); // 정확도 요구 높음}//}
+	}
+
+	static long countCubes(int A, int B, int C, double len) {
+		return (long)(A / len) * (long)(B / len) * (long)(C / len);
+	}
 }
