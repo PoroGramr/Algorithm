@@ -15,26 +15,28 @@ for _ in range(M):
     adj[a-1].append(b-1)
     adj[b-1].append(a-1)
 
-for i in range(N):
+
+for i in range(len(adj)):
+    dict = [[] for _ in range(len(adj))]
+    dict[i] = 0
+
     visited = [False] * N
-    dist = [-1] * N
 
     queue = deque([i])
     visited[i] = True
-    dist[i] = 0
 
-    while len(queue) != 0:
-        u = queue.popleft()
+    while queue:
+        current = queue.popleft()
+        for n in adj[current]:
+            if not visited[n]:
+                visited[n] = True
+                dict[n] = dict[current] + 1
+                queue.append(n)
 
-        for v in adj[u]:
-            if not visited[v]:
-                queue.append(v)
-                visited[v] = True
-                dist[v] = dist[u] + 1
-    kevinBacon = sum(dist)
+    kevinNum = sum(dict)
 
-    if minKevinNum > kevinBacon:
-        minKevinNum = kevinBacon
-        minNum = i 
+    if minKevinNum > kevinNum:
+        minKevinNum = kevinNum
+        minNum = i
 
 print(minNum + 1)
