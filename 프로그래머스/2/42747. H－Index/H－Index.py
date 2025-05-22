@@ -1,14 +1,15 @@
-"""
-발행한 논문을 역으로 정렬
-- 역으로 정렬한 경우 논문 목록의 (index + 1)이 h 이상 인용된 논문 수와 같음
-"""
 def solution(citations):
+    citations.sort()
+    print(citations)
     answer = 0
-    sortedCit = sorted(citations, key = lambda x : -x)
     
-    for i in range(len(sortedCit)):
-        if sortedCit[i] >= i+1:
-            answer = i+1
-        else:
-            break
+    for h in range(max(citations)):
+        currentCount = 0
+        for i in range(len(citations)):
+            if citations[i] >= h:
+                currentCount += 1
+        
+        if currentCount >= h:
+            answer = h
+            
     return answer
