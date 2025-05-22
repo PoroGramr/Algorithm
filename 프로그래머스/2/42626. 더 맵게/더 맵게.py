@@ -23,26 +23,22 @@ n : 1M -> 힙 써야함
 import heapq
 
 def solution(scoville, K):
-
-    heap = []
-    for scov in scoville:
-        heapq.heappush(heap, scov)
-    
-    # [1, 2, 3, 9, 10, 12]
-    
     answer = 0
+    heap = []
+    
+    for scov in scoville:
+        heapq.heappush(heap,scov)
     
     while heap[0] < K:
         if len(heap) == 1:
             return -1
-        
         min1 = heapq.heappop(heap)
         min2 = heapq.heappop(heap)
         
-        new = min1 + (min2 * 2)
+        mix = min1 + (min2 * 2)
         
-        heapq.heappush(heap, new)
+        heapq.heappush(heap,mix)
+        
         answer += 1
-    
     
     return answer
