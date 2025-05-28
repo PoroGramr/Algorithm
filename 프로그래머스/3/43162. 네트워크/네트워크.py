@@ -12,7 +12,6 @@ def solution(n, computers):
             
             while q:
                 current = q.popleft()
-                
                 for j, nei in enumerate(computers[current]):
                     if v[j] == 0 and nei == 1:
                         v[j] = 1
