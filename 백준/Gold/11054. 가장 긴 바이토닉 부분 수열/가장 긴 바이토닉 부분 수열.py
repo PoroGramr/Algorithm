@@ -1,27 +1,26 @@
-import sys
+n = int(input())
+data = list(map(int, input().split()))
 
-# 빠른 입력을 위해 sys.stdin.readline 사용
-n = int(sys.stdin.readline())
-data = list(map(int, sys.stdin.readline().split()))
 
-# 1. 왼쪽 -> 오른쪽으로 LIS 계산
-increase_dp = [1] * n
+answers=[1 for _ in range(n)]
+
+# 리스트의 요소 하나씩 기준으로 좌측은 가장 긴 수열 우축은 가장 짧은 수열 계산
 for i in range(n):
-    for j in range(i):
-        if data[i] > data[j]:
-            increase_dp[i] = max(increase_dp[i], increase_dp[j] + 1)
+    maxdp = [1 for _ in range(n)]
+    for a in range(0,i+1):
+        for b in range(a):        
+            if data[a] > data[b]:
+                maxdp[a] = max(maxdp[a], maxdp[b] + 1)
 
-# 2. 오른쪽 -> 왼쪽으로 LDS 계산 (실제로는 뒤집은 배열의 LIS)
-decrease_dp = [1] * n
-for i in range(n - 1, -1, -1): # n-1부터 0까지 역순으로
-    for j in range(n - 1, i, -1): # n-1부터 i+1까지 역순으로
-        if data[i] > data[j]:
-            decrease_dp[i] = max(decrease_dp[i], decrease_dp[j] + 1)
+    # print(i, data[i], maxdp)
+    mindp = [1 for _ in range(n)]
+    for c in range(i,n):
+        for d in range(i,c+1):
+            if data[c] < data[d]:
+                mindp[c] = max(mindp[c], mindp[d] + 1)
 
-# 3. 두 DP 테이블을 합쳐서 바이토닉 수열 길이 계산
-result_dp = [0] * n
-for i in range(n):
-    # data[i]가 산봉우리이므로 중복 계산되어 1을 빼준다.
-    result_dp[i] = increase_dp[i] + decrease_dp[i] - 1
+    answer = max(mindp) + max(maxdp) - 1
+    answers.append(answer) 
 
-print(max(result_dp))
+
+print(max(answers))
