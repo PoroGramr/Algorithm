@@ -13,7 +13,7 @@ def solution(sizes):
     max_height = -1
     
     for s in sizes:
-        s.sort() # 작은게 앞에, 큰게 뒤에 -> 세로형 명함
+        s.sort() 
         
         max_width = max(max_width, s[1])
         max_height = max(max_height, s[0])
