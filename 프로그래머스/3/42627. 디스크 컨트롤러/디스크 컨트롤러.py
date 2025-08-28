@@ -1,30 +1,37 @@
 import heapq
 
-
-#[0초에 요청들어옴, 3ms 소요]
 def solution(jobs):
     jobs.sort()
-    heap = []
-    n = len(jobs)
-    time = 0
-    idx  = 0
-    total = 0
-    done = 0
     
-    while done < n:
-        while idx < n and jobs[idx][0] <= time:
-            req, dur = jobs[idx]
+    # 일의 총 개수
+    sumJob = len(jobs)
+    
+    # 현재 job idx
+    curIdx = 0
+    
+    # 시각
+    time = 0
+    
+    # 대기시간의 합
+    sumTime = 0
+    
+    heap = []
+    done = 0
+    while done < sumJob:
+        
+        while curIdx < sumJob and jobs[curIdx][0] <= time:
+            req, dur = jobs[curIdx]
             heapq.heappush(heap, (dur, req))
-            idx += 1
+            curIdx += 1
         
         if heap:
-            dur, req = heapq.heappop(heap)
-            time += dur
-            total += time - req
+            runTime, req= heapq.heappop(heap)
+            time += runTime
+            sumTime += (time - req)
             done += 1
+        
         else:
-            time = jobs[idx][0]
-    
-    return total // n
-    
-    
+            if curIdx < sumJob:
+                time = jobs[curIdx][0]
+        
+    return sumTime // sumJob
