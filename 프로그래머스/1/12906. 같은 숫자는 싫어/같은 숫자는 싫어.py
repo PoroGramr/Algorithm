@@ -7,5 +7,5 @@ def solution(arr):
         if answer[-1] != i:
             answer.append(i)
         else:
-            continue
+            continue 
     return answer
