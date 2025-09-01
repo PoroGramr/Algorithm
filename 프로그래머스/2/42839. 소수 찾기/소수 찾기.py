@@ -1,22 +1,17 @@
 from math import sqrt
 from itertools import permutations
 
-def is_prime(n: int) -> bool:
-    if n < 2:
+def is_prime(n):
+    
+    if n in (0, 1):
         return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-    r = int(sqrt(n))
-    i = 3
-    while i <= r:
+    
+    for i in range(2, n):
         if n % i == 0:
             return False
-        i += 2
-    return True
+    return True 
 
-def solution(numbers: str) -> int:
+def solution(numbers):
     digits = list(numbers)
     primes = set()
 
