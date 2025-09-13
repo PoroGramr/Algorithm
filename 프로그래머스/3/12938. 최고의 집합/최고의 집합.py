@@ -4,17 +4,11 @@
 """
 def solution(n, s):
     
-    quo = s // n
-    if quo == 0:
+    base = s // n
+    if base == 0:
         return [-1]
-    rem = s % n
-    answer = [quo] * n
-    i = 0
-    while 0 < rem:
-        if i >= n:
-            i %= n
-        answer[i] += 1
-        rem -= 1
-        i += 1
-    answer.sort()
+    extra = s % n
+    
+    answer = [base] * (n - extra) + [base + 1] * extra
+    
     return answer
