@@ -40,17 +40,10 @@ def solution(record):
         elif com == "Change":
             name = curCom[2]
             users[uid] = name
-    """
-    print(result)
-    print(users)
-    
-    [['uid1234', 0], ['uid4567', 0], ['uid1234', 1], ['uid1234', 0]]
-    {'uid1234': 'Prodo', 'uid4567': 'Ryan'}
-    """
-    
+
     answer = []
     
-    
+    # 응답 문자열 생성
     for uid, enter in result:
         name = users[uid]
         
