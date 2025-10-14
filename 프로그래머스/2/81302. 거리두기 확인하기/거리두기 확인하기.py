@@ -66,6 +66,8 @@ def cross(y,x,place):
         px = dx[i]
             
         ny,nx = y + py, x + px
+        
+        # 파티션 2개가 사람과 사람 사이에 존재하는지 체크
         if in_range(ny,nx) and  place[ny][nx] == "P":
             bpyOne = y + part[i][0][0]
             bpxOne = x + part[i][0][1]
@@ -81,6 +83,8 @@ def checkPlace(place):
     for y in range(5):
             for x in range(5):
                 if place[y][x] == "P":
+                    
+                    # 해당 사람 주위에 거리두기가 제대로 지켜지는지 체크
                     if udlr(y,x,place) and plusTwo(y,x,place) and cross(y,x,place):
                         continue
                     else:
