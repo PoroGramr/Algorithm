@@ -34,7 +34,7 @@ def solution(msg):
             if w in lzwDict:
                 answer.append(lzwDict[w])      # 2-1) 색인 출력
 
-                next_pos = msgIndex + j        # w 다음 글자 위치 (중요!)
+                next_pos = msgIndex + j        # w 다음 글자 위치
                 # 2-2) 사전 추가: w 다음 글자가 존재할 때만
                 if next_pos < len(msg):
                     c = msg[next_pos]
@@ -42,11 +42,11 @@ def solution(msg):
                     if new_entry not in lzwDict:
                         maxDictIndex += 1
                         lzwDict[new_entry] = maxDictIndex
-                        # 최대 탐색 길이 상향(보수적으로)
+                        # 최대 탐색 길이 상향
                         if len(new_entry) > maxLen:
                             maxLen = len(new_entry)
 
-                # 입력 포인터는 w 길이만큼 전진 (중요!)
+                # 입력 포인터는 w 길이만큼 전진
                 msgIndex = next_pos
                 break
         # for가 반드시 매치 하나에서 break되므로 while은 진행됨
