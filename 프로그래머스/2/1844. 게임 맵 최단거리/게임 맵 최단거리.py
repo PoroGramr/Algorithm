@@ -1,33 +1,29 @@
 from collections import deque
-def bfs(maps,m,n):
-    visit = [[0] * n for _ in range(m)]
-    q = deque()
-    
-    q.append((0,0))
-    visit[0][0] = 1
-    
-    while q:
-        cy, cx = q.popleft()
 
-        for py, px in ((-1,0), (1,0), (0,-1), (0,1)):
+
+def bfs(y,x,maps):
+    
+    dy = [-1,1,0,0]
+    dx = [0,0,-1,1]
+    
+    q = deque()
+    q.append((0,0))
+    
+    visited = [[-1 for _ in range(x)] for _ in range(y)]
+    visited[0][0] = 1
+    while q:
+        cy,cx = q.popleft()
+        
+        for py,px in zip(dy,dx):
             ny = cy + py
             nx = cx + px
-            
-            if 0 <= ny < m and 0 <= nx < n and maps[ny][nx] == 1 and visit[ny][nx] == 0:
+            if 0 <= ny < y and 0 <=nx < x and visited[ny][nx] == -1 and maps[ny][nx] == 1:
                 q.append((ny,nx))
-                visit[ny][nx] = visit[cy][cx] + 1
-            
-            
-    if visit[m-1][n-1] != 0:
-        return visit[m-1][n-1]
-    else:
-        return -1
-        
-def solution(maps):
-    answer = 0
-    
-    n = len(maps[0])
-    m = len(maps)
+                visited[ny][nx] = visited[cy][cx] + 1
 
-    answer = bfs(maps, m, n)
+    return visited[y-1][x-1]
+def solution(maps):
+    y = len(maps)
+    x = len(maps[0])
+    answer = bfs(y,x,maps)
     return answer
