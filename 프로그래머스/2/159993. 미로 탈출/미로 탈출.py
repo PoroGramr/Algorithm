@@ -13,44 +13,15 @@ def findS(y,x,maps):
             if maps[ty][tx] == "S":
                 return ty,tx
 
-
-def findLever(y,x,maps):
+def findValue(ly,lx,y,x,maps, value):
     dy = [-1,1,0,0]
     dx = [0,0,-1,1]
-    
-    
-    sy,sx = findS(y,x,maps)
-    
-    q = deque()
-    q.append((sy,sx))
-    visited = [[-1 for _ in range(x)] for _ in range(y)]
-    visited[sy][sx] = 1
-    
-    while q:
-        cy,cx = q.popleft()
-        
-        for py, px in zip(dy,dx):
-            ny = cy + py
-            nx = cx + px
-            
-            if 0 <= ny < y and 0 <= nx < x and visited[ny][nx] == -1 and maps[ny][nx] != "X":
-                if maps[ny][nx] == "L":
-                    return ny,nx, visited[cy][cx] + 1
-                else:
-                    q.append((ny,nx))
-                    visited[ny][nx] = visited[cy][cx] + 1
-
-    return -1,-1,-1
-
-def findExit(ly,lx,y,x,maps):
-    dy = [-1,1,0,0]
-    dx = [0,0,-1,1]
-    
     
     sy,sx = ly,lx
     
     q = deque()
     q.append((sy,sx))
+    
     visited = [[-1 for _ in range(x)] for _ in range(y)]
     visited[sy][sx] = 0
     
@@ -62,27 +33,29 @@ def findExit(ly,lx,y,x,maps):
             nx = cx + px
             
             if 0 <= ny < y and 0 <= nx < x and visited[ny][nx] == -1 and maps[ny][nx] != "X":
-                if maps[ny][nx] == "E":
-                    return visited[cy][cx] + 1
+                if maps[ny][nx] == value:
+                    return ny,nx, visited[cy][cx] + 1
                 else:
                     q.append((ny,nx))
                     visited[ny][nx] = visited[cy][cx] + 1
 
-    return -1
+    return -1,-1,-1
 
 def solution(maps):
     y = len(maps)
     x = len(maps[0])
     
-    ly,lx,cnt = findLever(y,x,maps)
+    sy,sx = findS(y,x,maps)
+    
+    ly,lx,cnt = findValue(sy,sx,y,x,maps,"L")
     if ly == -1 and lx == -1:
         return -1
     
-    exit = findExit(ly,lx,y,x,maps)
+    a,b,exit = findValue(ly,lx,y,x,maps,"E")
     
     if exit == -1:
         return -1
     
-    answer = cnt + exit - 1
+    answer = cnt + exit
     
     return answer
