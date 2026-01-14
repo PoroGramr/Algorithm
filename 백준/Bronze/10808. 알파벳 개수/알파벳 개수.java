@@ -6,16 +6,14 @@ public class Main {
         String s = sc.next();
         int[] count = new int[26];
 
-        for (int i = 0;i < s.length(); i++){
+        for (int i = 0; i < s.length(); i++){
             char c = s.charAt(i);
             count[c - 'a']++;
         }
 
-        for (int i = 0; i < 26; i++){
-            System.out.print(count[i] + " ");
+        for(int i = 0; i < 26; i++){
+            System.out.print(count[i]);
+            System.out.print(" ");
         }
-
-
-
     }
 }
