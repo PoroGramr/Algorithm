@@ -1,24 +1,28 @@
-from collections import defaultdict
 
-n, S = map(int, input().split())
+# Online Python - IDE, Editor, Compiler, Interpreter
 
-data = list(map(int, input().split()))
+N, S = map(int, input().split())
+nums = list(map(int, input().split()))
 
-dp = defaultdict(int)
-dp[0] = 1
+count = 0
 
-
-for x in data:
-    ndp = defaultdict(int)
+def dfs(idx, total):
+    global count
     
-    for s, cnt in dp.items():
-        ndp[s] += cnt
-        ndp[s + x] += cnt
+    if idx == N:
+        if total == S:
+            count += 1
+        return
     
-    dp = ndp
+    dfs(idx + 1, total + nums[idx])
+    
+    dfs(idx + 1, total)
+    
 
+dfs(0,0)
+    
 
-ans = dp[S]
 if S == 0:
-    ans -= 1
-print(ans)
+    count -= 1
+
+print(count)
