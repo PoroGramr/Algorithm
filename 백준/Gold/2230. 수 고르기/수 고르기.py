@@ -14,13 +14,9 @@ while l < N and r < N:
     diff = data[r] - data[l]
     
     if diff >= M:
-        answer = min(diff, answer)
         l += 1
+        answer = min(answer, diff)
     else:
         r += 1
 
-
-print(answer)    
-    
-    
-    
+print(answer)
