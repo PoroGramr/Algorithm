@@ -1,56 +1,42 @@
-"""
+import sys
+input = sys.stdin.readline
 
-1번 : 2초 걸림 가장위 블록을 없애 인벤토리에
-2번 : 1초 걸림 인벤토리에서 블록 하나 꺼내 채움 
+N, M, B = map(int, input().split())
 
+# 높이별 개수 카운트
+cnt = [0] * 257
 
-최대한 빨리 땅 고르기 작업에 걸리는 최소 시간과 그 경우 땅의 높이
+for _ in range(N):
+    row = list(map(int, input().split()))
+    for h in row:
+        cnt[h] += 1
 
+best_time = float('inf')
+best_height = 0
 
-
-입력 n 세로 m 가로 b 인벤토리 블럭 수
-
-"""
-
-
-
-N,M,B = map(int, input().split())
-
-data = []
-
-daSet = set()
-
-for i in range(N):
-    data.append(list(map(int, input().split())))
-
-for y in range(N):
-    for x in range(M):
-        daSet.add(data[y][x])
-
-
-daSet = list(daSet)
-answer = []
-for d in range(257): 
+# 목표 높이 0 ~ 256 전부 검사
+for target in range(257):
     time = 0
     block = B
-    for y in range(N):
-        for x in range(M):
-            if data[y][x] != d:
-                
-                if data[y][x] > d:
-                    tmp = data[y][x] - d
-                    time += 2 * tmp
-                    block += tmp
-                else:
-                    tmp = d - data[y][x]
-                    time += tmp 
-                    block -= tmp
-    
-    
+
+    for h in range(257):
+        if cnt[h] == 0:
+            continue
+
+        diff = h - target
+
+        if diff > 0:
+            # 제거
+            time += diff * 2 * cnt[h]
+            block += diff * cnt[h]
+        else:
+            # 쌓기
+            time += (-diff) * cnt[h]
+            block -= (-diff) * cnt[h]
+
     if block >= 0:
-        answer.append((time, d))
+        if time < best_time or (time == best_time and target > best_height):
+            best_time = time
+            best_height = target
 
-answer.sort(key = lambda x : (x[0], -x[1]))
-print(*answer[0])
-
-
+print(best_time, best_height)
