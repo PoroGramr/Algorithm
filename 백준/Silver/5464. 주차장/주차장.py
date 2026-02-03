@@ -27,54 +27,47 @@ for _ in range(M):
     car.append(int(input()))
 
 # 차량들의 입출차 내역
-q = deque()
-wait = deque()
-for _ in range(M * 2):
-    q.append(int(input()))
+inout = []
 
-park = [-1 for _ in range(N)]
-emptyPark = N
+wait = deque()
+
+for _ in range(M * 2):
+    inout.append(int(input()))
+
+
+park = []
+
+parkCar = [-1 for _ in range(N)] 
+# 주차장 빈자리 번호
+for i in range(N):
+    heapq.heappush(park,i)
+
 
 answer = 0
 
-while q:
+
+for cmd in inout:
+    if cmd > 0:
+        if park:
+            parkNum = heapq.heappop(park)
+            parkCar[parkNum] = cmd
     
-    crt = q.popleft()
-    # 차가 출입
-    if crt > 0:
-        
-        # 주차장에 빈자리가 있다면
-        if emptyPark > 0 :
-            emptyPark -= 1
-            
-            # 빈자리에 주차
-            for i in range(N):
-                if park[i] == -1:
-                    park[i] = crt
-                    break
-
-        # 주차장에 빈자리가 없다면
         else:
-            wait.append(crt)
-            
-        continue
-        
+            wait.append(cmd)
 
-    # 차가 출차
     else:
         for i in range(N):
-            # 주차장 출차 처리
-            if park[i] == -crt:
-                park[i] = -1
-                emptyPark += 1
-                answer += car[(-crt) - 1] * cost[i]
+            if parkCar[i] == -cmd:
+                answer += cost[i] * car[(-cmd) - 1]
+                heapq.heappush(park, i)
+                parkCar[i] = -1
+
                 if wait:
-                    waitCar = wait.popleft()
-                    park[i] = waitCar
-                    emptyPark -= 1
-            
-                break  
-        continue           
+                    next = wait.popleft()
+                    ni = heapq.heappop(park)
+                    parkCar[ni] = next
+                
+                break
     
 print(answer)
             
