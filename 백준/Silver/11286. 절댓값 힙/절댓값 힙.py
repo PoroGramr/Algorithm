@@ -1,5 +1,5 @@
-import heapq
-
+import sys,heapq
+input = sys.stdin.readline
 heap = []
 
 N = int(input())
