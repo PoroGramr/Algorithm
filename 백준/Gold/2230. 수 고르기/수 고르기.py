@@ -1,4 +1,4 @@
-N, M = map(int, input().split())
+N,M = map(int, input().split())
 
 data = []
 
@@ -8,15 +8,20 @@ for _ in range(N):
 
 data.sort()
 
-l,r = 0, 0
 answer = float('inf')
+
+l,r = 0,0
+
+
 while l < N and r < N:
     diff = data[r] - data[l]
     
     if diff >= M:
-        l += 1
         answer = min(answer, diff)
+        l += 1
     else:
         r += 1
+    
+    
 
 print(answer)
