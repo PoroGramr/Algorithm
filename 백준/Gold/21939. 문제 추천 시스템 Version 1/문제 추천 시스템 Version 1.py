@@ -24,20 +24,25 @@ for _ in range(M):
             while maxh:
                 L = -maxh[0][0]
                 P = -maxh[0][1]
-
+                
                 if P in level and level[P] == L:
                     print(P)
                     break
+                
                 heapq.heappop(maxh)
-
-        else:  # num == -1
+        
+        else:
             while minh:
-                L, P = minh[0]
-
+                L = minh[0][0]
+                P = minh[0][1]
+                
                 if P in level and level[P] == L:
                     print(P)
                     break
+                
                 heapq.heappop(minh)
+            
+                
 
     elif op == "add":
         P = int(ops[1])
